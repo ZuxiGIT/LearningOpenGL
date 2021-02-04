@@ -1,4 +1,4 @@
-#include "Shader.hpp"
+#include "OpenGLShader.hpp"
 
 namespace GL{
 

@@ -2,9 +2,11 @@
 #define GLEW_STATIC
 #include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
-#include <math.h>
+//#include <math.h>
+#include <vector>
 
-#include "Shader.hpp"
+#include "OpenGLShader.hpp"
+#include "OpenGLBuffer.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -128,9 +130,10 @@ int main(void)
     glDeleteShader(fragmentShader);
 */
 
-GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
-                                 "shaders/fragmentShader.txt");
+    GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
+                                    "shaders/fragmentShader.txt");
 
+    GL::VAO vao;
 
 /*    
     float vertices[] = 
@@ -140,28 +143,58 @@ GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
        -0.5f, -0.5f
     };
 */
-    float vertices1[] = 
+    std::vector<float> vertices = 
+    {
+        // positions       
+        0.5f,  0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+       -0.5f, -0.5f, 0.0f,
+       -0.5f,  0.5f, 0.0f
+    };
+    
+
+    std::vector<float> colors = 
+    {
+        // color
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 0.0f
+    };
+    
+    vao.loadVertexData(vertices);
+    vao.loadVertexData(colors);
+    
+    
+/*
+    float vertices2[] = 
     {
         // positions       // colors
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-       -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+       -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f
     };
+*/
 
-    unsigned int indices[] = 
+    std::vector<unsigned int> indices = 
     {
-        0, 1, 2
+        0, 1, 3,
+        1, 2, 3
     }; 
-
+    
+    vao.loadIndices(indices);
+    
+/*
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
+    
     GLuint EBO;
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+    
     GLuint VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -171,9 +204,30 @@ GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
     glEnableVertexAttribArray(0);
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (const void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);    
+    glEnableVertexAttribArray(1);
 
-    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+*/
+/*
+    GLuint VAO2;
+    glGenVertexArrays(1, &VAO2);
+    glBindVertexArray(VAO2);
+   
+       
+    GLuint VBO1;
+    glGenBuffers(1, &VBO1);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), nullptr);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (const void *)(3 * sizeof(float)));
+
+*/    
+    //glBindVertexArray(0);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);    
+    
+
 
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
@@ -193,20 +247,22 @@ GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
 
         //glUseProgram(shaderProgram);
         shaderProgram.use();
-        glBindVertexArray(VAO);
+        //glBindVertexArray(VAO);
         // float timeValue = (float)glfwGetTime();
         // float greenValue = (sin(timeValue) / 2.f) + 0.5f;
         // int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        vao.draw();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    //glDeleteVertexArrays(1, &VAO);
+    //glDeleteBuffers(1, &VBO);
+    //glDeleteBuffers(1, &EBO); 
+    
     
     glfwTerminate();
 
