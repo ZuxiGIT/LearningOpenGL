@@ -1,6 +1,7 @@
 #include "OpenGLShader.hpp"
 
-namespace GL{
+namespace GL
+{
 
     void Shader::loadFromMemory(const char* shader_code)
     {

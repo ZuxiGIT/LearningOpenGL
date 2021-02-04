@@ -1,6 +1,8 @@
 #include "OpenGLBuffer.hpp"
+#include <stdio.h>
 
-namespace GL{
+namespace GL
+{
     
     VAO::VAO()
     {

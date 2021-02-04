@@ -3,7 +3,8 @@
 #include <string>
 #include <fstream>
 
-namespace GL{
+namespace GL
+{
 
     class Shader
     {
