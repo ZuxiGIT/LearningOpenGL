@@ -20,9 +20,8 @@ int main(void)
 
     GLFW::Window win ("OpenGL", 800, 600);
 
-
     GL::ShaderProgram shaderProgram( "shaders/vertexShader.txt",
-                                    "shaders/fragmentShader.txt");
+                                     "shaders/fragmentShader.txt");
 
     GL::VAO vao;
 
@@ -43,10 +42,6 @@ int main(void)
         0.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 0.0f
     };
-    
-    vao.loadVertexData(vertices);
-    vao.loadVertexData(colors);
-    
 
     std::vector<unsigned int> indices = 
     {
@@ -54,6 +49,8 @@ int main(void)
         1, 2, 3
     }; 
     
+    vao.loadVertexData(vertices);
+    vao.loadVertexData(colors);
     vao.loadIndices(indices);
 
     int nrAttributes;
@@ -66,7 +63,7 @@ int main(void)
 */
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    while(!glfwWindowShouldClose(win.pointer()))
+    while(!glfwWindowShouldClose(win.m_window))
     {
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -77,19 +74,10 @@ int main(void)
         // float greenValue = (sin(timeValue) / 2.f) + 0.5f;
         // int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-        //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
         vao.draw();
-        glfwSwapBuffers(win.pointer());
+        glfwSwapBuffers(win.m_window);
         glfwPollEvents();
     }
-
-    //glDeleteVertexArrays(1, &VAO);
-    //glDeleteBuffers(1, &VBO);
-    //glDeleteBuffers(1, &EBO); 
     
-    
-    glfwTerminate();
-
     return 0;
 }

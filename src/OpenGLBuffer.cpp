@@ -23,6 +23,7 @@ namespace GL
         glDrawArrays(type, 0, m_vertex_count);
         unbind();
     } 
+    
     void VAO::loadVertexData(const std::vector<float>& data)
     {
         bind();

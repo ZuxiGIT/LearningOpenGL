@@ -1,4 +1,5 @@
 #include "OpenGLShader.hpp"
+#include <fstream>
 
 namespace GL
 {
@@ -9,7 +10,7 @@ namespace GL
 
         compile();
     }
-    //TODO using ifstream or stat stbuf with calloc???? 
+    
     void Shader::loadFromFile(const char* shader_path)
     {
         std::string result;

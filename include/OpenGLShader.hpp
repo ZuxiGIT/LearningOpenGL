@@ -1,7 +1,7 @@
 #pragma once
-#include <GLEW/glew.h>
+#include <GLFW.hpp>
 #include <string>
-#include <fstream>
+
 
 namespace GL
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include <GLEW/glew.h>
+#include "GLFW.hpp"
 #include <vector>
 
 namespace GL 
